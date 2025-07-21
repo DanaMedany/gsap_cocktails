@@ -1,58 +1,14 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { SplitText } from "gsap/all";
+import { useRef } from "react";
+
+import { HeroAnimation } from "../utils/animation";
+import { useMediaQuery } from "react-responsive";
 
 function Hero() {
-  useGSAP(() => {
-    const heroSplit = new SplitText(".title", { type: "chars, words" });
-    const pharagraphSplit = new SplitText(".subtitle", {
-      type: "lines",
-    });
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-    heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
-    const tl = gsap.timeline();
-
-    tl.from(heroSplit.chars, {
-      duration: 1.8,
-      yPercent: 100,
-      ease: "expo.out",
-      stagger: 0.05,
-    }).from(
-      pharagraphSplit.lines,
-      {
-        duration: 1.8,
-        yPercent: 100,
-        opacity: 0,
-        ease: "expo.out",
-        stagger: 0.05,
-      },
-      "-=1.1"
-    );
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      })
-      .to(
-        ".right-leaf",
-        {
-          y: 200,
-        },
-        0
-      )
-      .to(
-        ".left-leaf",
-        {
-          y: -200,
-        },
-        0
-      );
-  }, []);
+  HeroAnimation(videoRef, isMobile);
 
   return (
     <>
@@ -90,6 +46,15 @@ function Hero() {
           </div>
         </div>
       </section>
+      <div className="video absolute inset-0">
+        <video
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+          src="/videos/output.mp4"
+        />
+      </div>
     </>
   );
 }

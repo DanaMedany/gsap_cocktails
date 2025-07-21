@@ -1,24 +1,9 @@
 import { navLinks } from "../../constants/index";
 
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { NavbarAnimation } from "../utils/animation";
 
 function Navbar() {
-  useGSAP(() => {
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: "nav",
-        start: "bottom top",
-      },
-    });
-
-    navTween.to("nav", {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      backgroundFilter: "blur(10px)",
-      duration: 0.5,
-      ease: "power1.inOut",
-    });
-  }, []);
+  NavbarAnimation();
 
   return (
     <nav>
