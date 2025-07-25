@@ -123,3 +123,33 @@ export function CocktailsAnimation() {
       });
   });
 }
+
+export function AboutAnimation() {
+  useGSAP(() => {
+    const titleSplit = SplitText.create("#about h2", { type: "words" });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#about",
+        start: "top center",
+      },
+    });
+
+    tl.from(titleSplit.words, {
+      opacity: 0,
+      duration: 1.5,
+      yPercent: 100,
+      ease: "expo.out",
+      stagger: 0.02,
+    }).from(
+      ".about-grid div",
+      {
+        opacity: 0,
+        duration: 1.5,
+        ease: "power1.out",
+        stagger: 0.05,
+      },
+      "-=0.5"
+    );
+  });
+}
